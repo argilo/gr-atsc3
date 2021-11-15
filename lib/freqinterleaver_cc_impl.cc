@@ -609,14 +609,7 @@ namespace gr {
           break;
       }
 
-      lfsr2 = 1;
-      result = 0;
-      for (int k = 0; k < xor_size2; k++) {
-        result ^= (lfsr2 >> logic2[k]) & 1;
-      }
-      lfsr2 &= (pn_mask << 1) | 0x1;
-      lfsr2 >>= 1;
-      lfsr2 |= result << (pn_degree);
+      lfsr2 = (pn_mask << 1) | 0x1;
 
       for (int i = 0; i < max_states; i++) {
         if (i == 0 || i == 1) {
@@ -705,7 +698,7 @@ namespace gr {
         for (int j = 0; j < symbols; j++) {
           if (frame_symbols[j] == PREAMBLE_SYMBOL) {
             if (j == 0) {
-              if ((symbols % 2) == 0) {
+              if ((j % 2) == 0) {
                 H = HevenFP;
               }
               else {
@@ -713,7 +706,7 @@ namespace gr {
               }
             }
             else {
-              if ((symbols % 2) == 0) {
+              if ((j % 2) == 0) {
                 H = HevenP;
               }
               else {
@@ -727,7 +720,7 @@ namespace gr {
           }
           else if (interleaver_mode == FREQ_ALL_SYMBOLS) {
             if (frame_symbols[j] == SBS_SYMBOL) {
-              if ((symbols % 2) == 0) {
+              if ((j % 2) == 0) {
                 H = HevenSBS;
               }
               else {
@@ -735,7 +728,7 @@ namespace gr {
               }
             }
             else {
-              if ((symbols % 2) == 0) {
+              if ((j % 2) == 0) {
                 H = Heven;
               }
               else {
